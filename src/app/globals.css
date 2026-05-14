@@ -9,6 +9,8 @@
   --accent-dark: #7a3d22;
   --edge: #d3c4b0;
   --wood: #5c3d2e;
+  --gold: #f4c45c;
+  --gold-soft: rgba(244, 196, 92, 0.75);
   --background: var(--paper);
   --foreground: var(--ink);
 }
@@ -20,6 +22,10 @@
   --font-serif: var(--font-display);
 }
 
+.font-body {
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -27,14 +33,6 @@ html {
 body {
   min-height: 100%;
   background-color: var(--background);
-  background-image:
-    radial-gradient(
-      circle at 20% 20%,
-      rgba(160, 82, 45, 0.08),
-      transparent 45%
-    ),
-    radial-gradient(circle at 80% 0%, rgba(92, 61, 46, 0.06), transparent 40%),
-    linear-gradient(180deg, #f7f1e6 0%, #efe4d4 100%);
   color: var(--foreground);
   font-family: var(--font-body), system-ui, sans-serif;
 }
@@ -43,15 +41,33 @@ body {
   font-family: var(--font-display), Georgia, "Times New Roman", serif;
 }
 
+/* Menu cliente: nero + oro come il logo */
+.public-menu-root {
+  --menu-bg: #050505;
+  --menu-card: #101010;
+  --menu-gold: #f4c45c;
+  --menu-gold-dim: #c9a24a;
+  --menu-muted: #a89f8a;
+  --menu-line: rgba(244, 196, 92, 0.22);
+  min-height: 100vh;
+  background: radial-gradient(
+      ellipse 120% 80% at 50% -20%,
+      rgba(244, 196, 92, 0.12),
+      transparent 55%
+    ),
+    var(--menu-bg);
+  color: var(--menu-gold);
+}
+
 .menu-paper {
   background: linear-gradient(
-    145deg,
-    rgba(255, 252, 246, 0.95),
-    rgba(247, 238, 224, 0.98)
+    165deg,
+    rgba(18, 18, 18, 0.97) 0%,
+    rgba(8, 8, 8, 0.99) 100%
   );
   border-radius: 1.75rem;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.7) inset,
-    0 18px 40px rgba(58, 38, 24, 0.12);
-  border: 1px solid var(--edge);
+    0 0 0 1px rgba(244, 196, 92, 0.12) inset,
+    0 24px 48px rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--menu-line);
 }

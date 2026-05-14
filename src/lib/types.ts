@@ -17,6 +17,6 @@ export type RestaurantSettings = {
 };
 
 export const DEFAULT_SETTINGS: RestaurantSettings = {
-  name: "Larambla",
-  tagline: "Montagna, bosco e porcini",
+  name: "La Rambla",
+  tagline: "Pizzeria — Ristorante",
 };

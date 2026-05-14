@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { ADMIN_BASE_PATH } from "@/lib/admin-route";
 import { auth } from "@/lib/firebase";
 
 export function AdminLoginForm() {
@@ -19,7 +20,7 @@ export function AdminLoginForm() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email.trim(), password);
-      router.replace("/admin");
+      router.replace(`/${ADMIN_BASE_PATH}`);
     } catch {
       setError("Credenziali non valide o errore di rete.");
     } finally {
@@ -30,7 +31,7 @@ export function AdminLoginForm() {
   return (
     <div className="mx-auto max-w-sm px-4 py-16">
       <div className="rounded-2xl border border-[var(--edge)] bg-white/80 p-8 shadow-lg">
-        <h1 className="font-display text-2xl text-[var(--ink)]">Area riservata</h1>
+        <h1 className="font-display text-3xl text-[var(--ink)]">Area riservata</h1>
         <p className="mt-2 text-sm text-[var(--muted)]">
           Accedi per modificare menu e insegna.
         </p>
@@ -68,9 +69,11 @@ export function AdminLoginForm() {
         </form>
         <Link
           href="/"
+          target="_blank"
+          rel="noopener noreferrer"
           className="mt-6 block text-center text-sm text-[var(--muted)] hover:text-[var(--ink)]"
         >
-          Torna alla home
+          Apri menu cliente (anteprima)
         </Link>
       </div>
     </div>

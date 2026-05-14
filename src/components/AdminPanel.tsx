@@ -3,6 +3,7 @@
 import { onAuthStateChanged, signOut, type User } from "firebase/auth";
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { AdminMenuQr } from "@/components/AdminMenuQr";
 import { BrandLogo } from "@/components/BrandLogo";
 import {
   createDish,
@@ -10,6 +11,7 @@ import {
   subscribeDishes,
   updateDish,
 } from "@/lib/dishes";
+import { ADMIN_BASE_PATH } from "@/lib/admin-route";
 import { auth } from "@/lib/firebase";
 import {
   saveRestaurantSettings,
@@ -35,6 +37,8 @@ export function AdminPanel() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+
+  const loginHref = `/${ADMIN_BASE_PATH}/login`;
 
   useEffect(() => {
     return onAuthStateChanged(auth, setUser);
@@ -144,7 +148,7 @@ export function AdminPanel() {
       <div className="mx-auto max-w-md px-4 py-16 text-center">
         <p className="text-[var(--muted)]">Accesso richiesto.</p>
         <Link
-          href="/admin/login"
+          href={loginHref}
           className="mt-4 inline-block rounded-full bg-[var(--accent)] px-6 py-2 text-sm font-medium text-white hover:opacity-95"
         >
           Vai al login
@@ -159,16 +163,12 @@ export function AdminPanel() {
         <BrandLogo restaurantName={settings.name} />
         <div className="flex flex-wrap gap-2">
           <Link
-            href="/menu"
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="rounded-full border border-[var(--edge)] bg-white/70 px-4 py-2 text-sm text-[var(--ink)] hover:bg-white"
           >
-            Anteprima menu
-          </Link>
-          <Link
-            href="/qr"
-            className="rounded-full border border-[var(--edge)] bg-white/70 px-4 py-2 text-sm text-[var(--ink)] hover:bg-white"
-          >
-            QR tavolo
+            Apri menu cliente
           </Link>
           <button
             type="button"
@@ -180,13 +180,15 @@ export function AdminPanel() {
         </div>
       </div>
 
+      <AdminMenuQr />
+
       <form
         onSubmit={handleSaveSettings}
         className="mb-10 rounded-2xl border border-[var(--edge)] bg-white/60 p-5 shadow-inner"
       >
         <h2 className="font-display text-xl text-[var(--ink)]">Insegna</h2>
         <p className="mb-4 text-sm text-[var(--muted)]">
-          Nome e tagline mostrati in cima al menu pubblico.
+          Nome e tagline mostrati sotto il logo nel menu pubblico.
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="block text-sm">
