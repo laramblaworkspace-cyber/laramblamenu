@@ -4,7 +4,8 @@ export type Dish = {
   id: string;
   name: string;
   description: string;
-  price: number;
+  /** `null` = nessun prezzo mostrato nel menu. */
+  price: number | null;
   category: string;
   sortOrder: number;
   active: boolean;

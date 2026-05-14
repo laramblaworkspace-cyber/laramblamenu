@@ -49,8 +49,8 @@ export function BrandLogo({
           />
         ) : (
           <>
-            <MushroomMark className={`${icon} shrink-0 text-[var(--gold)]`} />
-            <p className="font-display text-2xl text-[var(--gold)] sm:text-3xl">
+            <MushroomMark className={`${icon} shrink-0 text-[var(--accent)]`} />
+            <p className="font-display text-2xl text-[var(--ink)] sm:text-3xl">
               {restaurantName}
             </p>
           </>

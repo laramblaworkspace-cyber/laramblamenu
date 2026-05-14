@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main className="public-menu-root flex flex-1 flex-col py-6 sm:py-10">
+    <main className="public-menu-root flex flex-1 flex-col px-3 py-4 sm:px-4 sm:py-8">
       <PublicMenuView />
     </main>
   );

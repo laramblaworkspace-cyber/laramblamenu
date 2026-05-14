@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { BrandLogo } from "@/components/BrandLogo";
+import { sortCategoryEntries } from "@/lib/categories";
 import { subscribeDishes } from "@/lib/dishes";
 import { subscribeRestaurantSettings } from "@/lib/settings";
 import type { Dish, RestaurantSettings } from "@/lib/types";
@@ -34,68 +35,70 @@ export function PublicMenuView() {
     const visible = dishes.filter((d) => d.active);
     const map = new Map<string, Dish[]>();
     for (const d of visible) {
-      const key = d.category.trim() || "Generale";
+      const key = d.category.trim() || "Antipasti";
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(d);
     }
-    return Array.from(map.entries());
+    return sortCategoryEntries(Array.from(map.entries()));
   }, [dishes]);
 
   return (
-    <div className="menu-paper relative mx-auto max-w-2xl px-4 py-10 sm:px-8 sm:py-12">
+    <div className="menu-paper relative mx-auto w-full max-w-lg px-4 py-8 sm:max-w-2xl sm:px-8 sm:py-10">
       <div
-        className="pointer-events-none absolute inset-3 rounded-[2rem] border border-[var(--menu-line)] opacity-80"
+        className="pointer-events-none absolute inset-2 rounded-2xl border border-[var(--menu-line)] sm:inset-3 sm:rounded-[1.75rem]"
         aria-hidden
       />
-      <header className="relative mb-10 text-center">
-        <div className="mb-4 flex justify-center">
+      <header className="relative mb-8 text-center sm:mb-10">
+        <div className="mb-3 flex justify-center sm:mb-4">
           <BrandLogo restaurantName={settings.name} size="lg" variant="emblem" />
         </div>
-        <p className="font-body text-xs font-semibold uppercase tracking-[0.35em] text-[var(--menu-muted)]">
+        <p className="font-body px-2 text-[11px] font-semibold uppercase leading-snug tracking-[0.2em] text-[var(--menu-muted)] sm:text-xs sm:tracking-[0.28em]">
           {settings.tagline}
         </p>
-        <div className="mx-auto mt-6 h-px w-40 bg-gradient-to-r from-transparent via-[var(--menu-gold)] to-transparent opacity-60" />
+        <div className="mx-auto mt-5 h-px w-36 bg-gradient-to-r from-transparent via-[var(--menu-line)] to-transparent sm:mt-6 sm:w-44" />
       </header>
 
       {error ? (
-        <p className="rounded-xl border border-red-900/50 bg-red-950/40 px-4 py-3 text-center text-sm text-red-200">
+        <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-center text-sm text-red-900">
           {error}
         </p>
       ) : null}
 
       {grouped.length === 0 && !error ? (
-        <p className="text-center text-[var(--menu-muted)]">
+        <p className="text-center text-base text-[var(--menu-muted)]">
           Il menu è in allestimento. Torna tra poco.
         </p>
       ) : null}
 
-      <div className="relative space-y-10">
+      <div className="relative space-y-8 sm:space-y-10">
         {grouped.map(([category, items]) => (
           <section key={category}>
-            <h2 className="mb-5 flex items-center gap-3 font-display text-3xl font-normal tracking-wide text-[var(--menu-gold)] sm:text-4xl">
-              <span className="h-px flex-1 bg-[var(--menu-line)]" />
-              <span className="shrink-0">{category}</span>
-              <span className="h-px flex-1 bg-[var(--menu-line)]" />
+            <h2 className="mb-4 flex items-center gap-2 font-display text-2xl font-normal leading-tight text-[var(--menu-accent)] sm:mb-5 sm:gap-3 sm:text-3xl">
+              <span className="h-px min-w-[1rem] flex-1 bg-[var(--menu-line)]" />
+              <span className="max-w-[85%] shrink-0 text-center">{category}</span>
+              <span className="h-px min-w-[1rem] flex-1 bg-[var(--menu-line)]" />
             </h2>
-            <ul className="space-y-5">
+            <ul className="space-y-4 sm:space-y-5">
               {items.map((d) => (
                 <li
                   key={d.id}
-                  className="flex flex-col gap-1 border-b border-dashed border-[var(--menu-line)] pb-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+                  className="flex flex-col gap-1 border-b border-dashed border-[var(--menu-line)] pb-4 last:border-b-0 sm:flex-row sm:items-start sm:justify-between sm:gap-5 sm:pb-5"
                 >
-                  <div>
-                    <p className="font-body text-lg font-semibold text-[var(--menu-gold)]">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-body text-base font-semibold leading-snug text-[var(--menu-ink)] sm:text-lg">
                       {d.name}
                     </p>
                     {d.description ? (
-                      <p className="mt-1 text-sm leading-relaxed text-[var(--menu-muted)]">
+                      <p className="mt-1.5 text-sm leading-relaxed text-[var(--menu-muted)] sm:text-[15px]">
                         {d.description}
                       </p>
                     ) : null}
                   </div>
-                  <p className="shrink-0 font-display text-2xl text-[var(--menu-gold-dim)] sm:text-right">
-                    {formatPrice(d.price)}
-                  </p>
+                  {d.price !== null ? (
+                    <p className="shrink-0 pt-0.5 text-right font-display text-xl text-[var(--menu-accent-soft)] sm:min-w-[5.5rem] sm:text-2xl">
+                      {formatPrice(d.price)}
+                    </p>
+                  ) : null}
                 </li>
               ))}
             </ul>
@@ -103,7 +106,7 @@ export function PublicMenuView() {
         ))}
       </div>
 
-      <footer className="relative mt-14 text-center text-xs text-[var(--menu-muted)]">
+      <footer className="relative mt-10 px-1 text-center text-[11px] leading-relaxed text-[var(--menu-muted)] sm:mt-14 sm:text-xs">
         <p>Chiedi al personale per allergeni e intolleranze.</p>
       </footer>
     </div>

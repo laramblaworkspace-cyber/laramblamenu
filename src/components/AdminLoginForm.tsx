@@ -29,11 +29,13 @@ export function AdminLoginForm() {
   }
 
   return (
-    <div className="mx-auto max-w-sm px-4 py-16">
-      <div className="rounded-2xl border border-[var(--edge)] bg-white/80 p-8 shadow-lg">
-        <h1 className="font-display text-3xl text-[var(--ink)]">Area riservata</h1>
-        <p className="mt-2 text-sm text-[var(--muted)]">
-          Accedi per modificare menu e insegna.
+    <div className="mx-auto max-w-sm px-4 py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:py-16">
+      <div className="rounded-2xl border border-[var(--edge)] bg-white p-6 shadow-lg sm:p-8">
+        <h1 className="font-display text-3xl text-[var(--ink)] sm:text-4xl">
+          Area riservata
+        </h1>
+        <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
+          Accedi per modificare il menu.
         </p>
         <form onSubmit={onSubmit} className="mt-6 space-y-4">
           <label className="block text-sm">
@@ -42,7 +44,7 @@ export function AdminLoginForm() {
               type="email"
               autoComplete="username"
               required
-              className="mt-1 w-full rounded-xl border border-[var(--edge)] bg-[var(--cream)] px-3 py-2"
+              className="mt-1.5 min-h-12 w-full rounded-xl border border-[var(--edge)] bg-[var(--cream)] px-3 py-2 text-base"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -53,7 +55,7 @@ export function AdminLoginForm() {
               type="password"
               autoComplete="current-password"
               required
-              className="mt-1 w-full rounded-xl border border-[var(--edge)] bg-[var(--cream)] px-3 py-2"
+              className="mt-1.5 min-h-12 w-full rounded-xl border border-[var(--edge)] bg-[var(--cream)] px-3 py-2 text-base"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -62,7 +64,7 @@ export function AdminLoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-full bg-[var(--accent)] py-2.5 text-sm font-medium text-white disabled:opacity-50"
+            className="min-h-12 w-full rounded-xl bg-[var(--accent)] text-base font-semibold text-white disabled:opacity-50 sm:rounded-full"
           >
             {loading ? "Accesso…" : "Entra"}
           </button>
@@ -71,9 +73,9 @@ export function AdminLoginForm() {
           href="/"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 block text-center text-sm text-[var(--muted)] hover:text-[var(--ink)]"
+          className="mt-6 flex min-h-12 items-center justify-center text-center text-sm font-medium text-[var(--muted)] active:text-[var(--ink)]"
         >
-          Apri menu cliente (anteprima)
+          Apri menu cliente
         </Link>
       </div>
     </div>

@@ -14,6 +14,13 @@ import type { Dish } from "@/lib/types";
 
 const dishesCol = collection(db, "dishes");
 
+function parsePrice(data: Record<string, unknown>): number | null {
+  const raw = data.price;
+  if (raw === null || raw === undefined) return null;
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : null;
+}
+
 export function subscribeDishes(
   onData: (dishes: Dish[]) => void,
   onError?: (e: Error) => void,
@@ -28,8 +35,8 @@ export function subscribeDishes(
           id: d.id,
           name: String(data.name ?? ""),
           description: String(data.description ?? ""),
-          price: Number(data.price ?? 0),
-          category: String(data.category ?? "Generale"),
+          price: parsePrice(data),
+          category: String(data.category ?? "Antipasti"),
           sortOrder: Number(data.sortOrder ?? 0),
           active: Boolean(data.active ?? true),
           createdAt: data.createdAt ?? null,
