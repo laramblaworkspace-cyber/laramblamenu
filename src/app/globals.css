@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cream: #f4ead8;
+  --paper: #faf6ef;
+  --ink: #2a1c12;
+  --muted: #6b5344;
+  --accent: #a0522d;
+  --accent-dark: #7a3d22;
+  --edge: #d3c4b0;
+  --wood: #5c3d2e;
+  --background: var(--paper);
+  --foreground: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  min-height: 100%;
+  background-color: var(--background);
+  background-image:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(160, 82, 45, 0.08),
+      transparent 45%
+    ),
+    radial-gradient(circle at 80% 0%, rgba(92, 61, 46, 0.06), transparent 40%),
+    linear-gradient(180deg, #f7f1e6 0%, #efe4d4 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+}
+
+.menu-paper {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 252, 246, 0.95),
+    rgba(247, 238, 224, 0.98)
+  );
+  border-radius: 1.75rem;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 18px 40px rgba(58, 38, 24, 0.12);
+  border: 1px solid var(--edge);
 }
